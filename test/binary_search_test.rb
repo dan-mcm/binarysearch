@@ -22,6 +22,15 @@ class BinarySearchTest < Minitest::Test
         # primarily for use if we default to a linearsearch result if array is not sorted
         @large_array_unsorted = (-1000..1000).to_a.shuffle
         @large_array_unsorted_instance = BinarySearch.new(@large_array_unsorted)
+
+        @empty_array = []
+        @binary_empty_instance = BinarySearch.new(@empty_array)
+
+        @duplicate_entires_array = [1, 1, 2, 3, 3, 3, 4, 5, 6, 7]
+        @binary_duplicate_entries_instance = BinarySearch.new(@duplicate_entires_array)
+
+        @massive_array = (-10 * 10**6 .. 10 * 10**6).to_a
+        @binary_massive_instance = BinarySearch.new(@massive_array)
     end
 
     def test_existing_sorted_array
@@ -42,7 +51,7 @@ class BinarySearchTest < Minitest::Test
     end
 
     def test_existing_element_positive_negative_array
-        assert_equal 2, @binary_positive_negative_instance.search(0)
+        assert_equal(2, @binary_positive_negative_instance.search(0))
     end
 
     def test_nonexistent_element_positive_negative_array
@@ -50,7 +59,7 @@ class BinarySearchTest < Minitest::Test
     end
 
     def test_existing_element_decimal_array
-        assert_equal 3, @binary_decimal_instance.search(4.1)
+        assert_equal(3, @binary_decimal_instance.search(4.1))
     end
 
     def test_nonexistent_element_decimal_array
@@ -58,7 +67,7 @@ class BinarySearchTest < Minitest::Test
     end
 
     def test_existing_element_large_array_sorted
-        assert_equal 1043, @large_array_sorted_instance.search(43)
+        assert_equal(1043, @large_array_sorted_instance.search(43))
     end
 
     def test_nonexistent_element_large_array_sorted
@@ -72,5 +81,18 @@ class BinarySearchTest < Minitest::Test
 
     def test_nonexistent_element_large_array_unsorted
         assert_equal(-1, @large_array_unsorted_instance.search(1001))
+    end
+
+    def test_empty_array
+        assert_equal(-1, @binary_empty_instance.search(1))
+    end
+
+    def test_duplicate_entries_array
+        assert_equal(2, @binary_duplicate_entries_instance.search(2))
+    end
+
+    def test_massive_array
+        ## note: potential scope here for performance testing in future
+        assert_equal(10000002, @binary_massive_instance.search(2))
     end
 end
